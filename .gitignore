@@ -14,7 +14,6 @@
 x64/
 build/
 bld/
-[Bb]in/
 [Oo]bj/
 
 # CMake
@@ -234,3 +233,5 @@ data/textures/**
 data/README_asset_pack.md
 data/font*.*
 data/roboto*.*
+
+!.gitignore
