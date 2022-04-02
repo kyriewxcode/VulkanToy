@@ -61,7 +61,8 @@ function(buildExamples)
 endfunction(buildExamples)
 
 set(EXAMPLES
-    triangle
+exampleTemplate
+triangle
 )
 
 buildExamples()
