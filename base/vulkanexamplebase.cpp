@@ -166,7 +166,7 @@ void VulkanExampleBase::destroyCommandBuffers()
 
 std::string VulkanExampleBase::getShadersPath() const
 {
-	return getAssetPath() + "shaders/" + shaderDir + "/";
+	return getAssetPath() + "shaders/";
 }
 
 void VulkanExampleBase::createPipelineCache()
@@ -763,15 +763,15 @@ VulkanExampleBase::VulkanExampleBase(bool enableValidation)
 	if (commandLineParser.isSet("fullscreen")) {
 		settings.fullscreen = true;
 	}
-	if (commandLineParser.isSet("shaders")) {
-		std::string value = commandLineParser.getValueAsString("shaders", "glsl");
-		if ((value != "glsl") && (value != "hlsl")) {
-			std::cerr << "Shader type must be one of 'glsl' or 'hlsl'\n";
-		}
-		else {
-			shaderDir = value;
-		}
-	}
+	//if (commandLineParser.isSet("shaders")) {
+	//	std::string value = commandLineParser.getValueAsString("shaders", "glsl");
+	//	if ((value != "glsl") && (value != "hlsl")) {
+	//		std::cerr << "Shader type must be one of 'glsl' or 'hlsl'\n";
+	//	}
+	//	else {
+	//		shaderDir = value;
+	//	}
+	//}
 	if (commandLineParser.isSet("benchmark")) {
 		benchmark.active = true;
 		vks::tools::errorModeSilent = true;

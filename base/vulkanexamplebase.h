@@ -111,7 +111,6 @@ private:
 	void setupSwapChain();
 	void createCommandBuffers();
 	void destroyCommandBuffers();
-	std::string shaderDir = "glsl";
 protected:
 	// Returns the path to the root of the glsl or hlsl shader directory.
 	std::string getShadersPath() const;
