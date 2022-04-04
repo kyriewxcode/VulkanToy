@@ -60,6 +60,7 @@ endfunction(buildExamples)
 set(EXAMPLES
 exampleTemplate
 triangle
+pipelines
 )
 
 buildExamples()

@@ -1,18 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
-#include <fstream>
-#include <vector>
-#include <exception>
-
-#define GLM_FORCE_RADIANS
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
-#include <vulkan/vulkan.h>
 #include "vulkanexamplebase.h"
+#include "VulkanglTFModel.h"
 
 #define ENABLE_VALIDATION false
 #define USE_STAGING true
@@ -70,7 +57,7 @@ public:
 
 	Triangle() : VulkanExampleBase(ENABLE_VALIDATION)
 	{
-		title = "Vulkan Example - Basic indexed triangle";
+		title = "Vulkan Example - triangle";
 		settings.overlay = false;
 		camera.type = Camera::CameraType::lookat;
 		camera.setPosition(glm::vec3(0.0f, 0.0f, -2.5f));
@@ -80,7 +67,27 @@ public:
 
 	~Triangle()
 	{
+		vkDestroyPipeline(device, pipeline, nullptr);
 
+		vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
+		vkDestroyDescriptorSetLayout(device, descriptorSetLayout, nullptr);
+
+		vkDestroyBuffer(device, vertices.buffer, nullptr);
+		vkFreeMemory(device, vertices.memory, nullptr);
+
+		vkDestroyBuffer(device, indices.buffer, nullptr);
+		vkFreeMemory(device, indices.memory, nullptr);
+
+		vkDestroyBuffer(device, uniformBufferVS.buffer, nullptr);
+		vkFreeMemory(device, uniformBufferVS.memory, nullptr);
+
+		vkDestroySemaphore(device, presentCompleteSemaphore, nullptr);
+		vkDestroySemaphore(device, renderCompleteSemaphore, nullptr);
+
+		for (auto& fence : waitFences)
+		{
+			vkDestroyFence(device, fence, nullptr);
+		}
 	}
 
 	uint32_t getMemoryTypeIndex(uint32_t typeBits, VkMemoryPropertyFlags properties)
