@@ -197,11 +197,6 @@ FakesAssemblies/
 
 .vs/
 
-# Don't ignore 3d models in obj format
-!data/models/*.obj
-!data/models/lowpoly/*.obj
-!data/models/voyager/*.obj
-
 # DLLs in bin
 !bin/*.dll
 
@@ -209,12 +204,6 @@ FakesAssemblies/
 android/layers/*/*.so
 android/**/jni/
 
-# Downloadable assets
-vulkan_asset_pack_gltf.*
-data/textures/hdr/*.*
-data/readme.txt
-data/models/cerberus/*.*
-!data/textures/hdr/README.md
 
 *.args.json
 
@@ -226,12 +215,5 @@ data/models/cerberus/*.*
 
 # Ignore macOS .DS_Store
 .DS_Store
-
-# Assets that are part of the asset pack and should not be stored in the repo
-data/models/**
-data/textures/**
-data/README_asset_pack.md
-data/font*.*
-data/roboto*.*
 
 !.gitignore
