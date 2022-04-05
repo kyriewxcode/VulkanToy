@@ -111,6 +111,7 @@ private:
 	void setupSwapChain();
 	void createCommandBuffers();
 	void destroyCommandBuffers();
+	std::string shaderDir = "glsl";
 protected:
 	// Returns the path to the root of the glsl or hlsl shader directory.
 	std::string getShadersPath() const;
@@ -188,7 +189,7 @@ public:
 	vks::Benchmark benchmark;
 
 	/** @brief Encapsulated physical and logical vulkan device */
-	vks::VulkanDevice* vulkanDevice;
+	vks::VulkanDevice *vulkanDevice;
 
 	/** @brief Example settings that can be changed e.g. by command line arguments */
 	struct Settings {
@@ -202,7 +203,7 @@ public:
 		bool overlay = true;
 	} settings;
 
-	VkClearColorValue defaultClearColor = { {0.2f,0.2f,0.2f,1.0f} };
+	VkClearColorValue defaultClearColor = { { 0.025f, 0.025f, 0.025f, 1.0f } };
 
 	static std::vector<const char*> args;
 
@@ -255,22 +256,22 @@ public:
 	void* view;
 #elif defined(VK_USE_PLATFORM_DIRECTFB_EXT)
 	bool quit = false;
-	IDirectFB* dfb = nullptr;
-	IDirectFBDisplayLayer* layer = nullptr;
-	IDirectFBWindow* window = nullptr;
-	IDirectFBSurface* surface = nullptr;
-	IDirectFBEventBuffer* event_buffer = nullptr;
+	IDirectFB *dfb = nullptr;
+	IDirectFBDisplayLayer *layer = nullptr;
+	IDirectFBWindow *window = nullptr;
+	IDirectFBSurface *surface = nullptr;
+	IDirectFBEventBuffer *event_buffer = nullptr;
 #elif defined(VK_USE_PLATFORM_WAYLAND_KHR)
-	wl_display* display = nullptr;
-	wl_registry* registry = nullptr;
-	wl_compositor* compositor = nullptr;
-	struct xdg_wm_base* shell = nullptr;
-	wl_seat* seat = nullptr;
-	wl_pointer* pointer = nullptr;
-	wl_keyboard* keyboard = nullptr;
-	wl_surface* surface = nullptr;
-	struct xdg_surface* xdg_surface;
-	struct xdg_toplevel* xdg_toplevel;
+	wl_display *display = nullptr;
+	wl_registry *registry = nullptr;
+	wl_compositor *compositor = nullptr;
+	struct xdg_wm_base *shell = nullptr;
+	wl_seat *seat = nullptr;
+	wl_pointer *pointer = nullptr;
+	wl_keyboard *keyboard = nullptr;
+	wl_surface *surface = nullptr;
+	struct xdg_surface *xdg_surface;
+	struct xdg_toplevel *xdg_toplevel;
 	bool quit = false;
 	bool configured = false;
 
@@ -278,10 +279,10 @@ public:
 	bool quit = false;
 #elif defined(VK_USE_PLATFORM_XCB_KHR)
 	bool quit = false;
-	xcb_connection_t* connection;
-	xcb_screen_t* screen;
+	xcb_connection_t *connection;
+	xcb_screen_t *screen;
 	xcb_window_t window;
-	xcb_intern_atom_reply_t* atom_wm_delete_window;
+	xcb_intern_atom_reply_t *atom_wm_delete_window;
 #elif defined(VK_USE_PLATFORM_HEADLESS_EXT)
 	bool quit = false;
 #endif
@@ -306,57 +307,57 @@ public:
 	void windowWillResize(float x, float y);
 	void windowDidResize();
 #elif defined(VK_USE_PLATFORM_DIRECTFB_EXT)
-	IDirectFBSurface* setupWindow();
-	void handleEvent(const DFBWindowEvent* event);
+	IDirectFBSurface *setupWindow();
+	void handleEvent(const DFBWindowEvent *event);
 #elif defined(VK_USE_PLATFORM_WAYLAND_KHR)
-	struct xdg_surface* setupWindow();
+	struct xdg_surface *setupWindow();
 	void initWaylandConnection();
 	void setSize(int width, int height);
-	static void registryGlobalCb(void* data, struct wl_registry* registry,
-		uint32_t name, const char* interface, uint32_t version);
-	void registryGlobal(struct wl_registry* registry, uint32_t name,
-		const char* interface, uint32_t version);
-	static void registryGlobalRemoveCb(void* data, struct wl_registry* registry,
-		uint32_t name);
-	static void seatCapabilitiesCb(void* data, wl_seat* seat, uint32_t caps);
-	void seatCapabilities(wl_seat* seat, uint32_t caps);
-	static void pointerEnterCb(void* data, struct wl_pointer* pointer,
-		uint32_t serial, struct wl_surface* surface, wl_fixed_t sx,
-		wl_fixed_t sy);
-	static void pointerLeaveCb(void* data, struct wl_pointer* pointer,
-		uint32_t serial, struct wl_surface* surface);
-	static void pointerMotionCb(void* data, struct wl_pointer* pointer,
-		uint32_t time, wl_fixed_t sx, wl_fixed_t sy);
-	void pointerMotion(struct wl_pointer* pointer,
-		uint32_t time, wl_fixed_t sx, wl_fixed_t sy);
-	static void pointerButtonCb(void* data, struct wl_pointer* wl_pointer,
-		uint32_t serial, uint32_t time, uint32_t button, uint32_t state);
-	void pointerButton(struct wl_pointer* wl_pointer,
-		uint32_t serial, uint32_t time, uint32_t button, uint32_t state);
-	static void pointerAxisCb(void* data, struct wl_pointer* wl_pointer,
-		uint32_t time, uint32_t axis, wl_fixed_t value);
-	void pointerAxis(struct wl_pointer* wl_pointer,
-		uint32_t time, uint32_t axis, wl_fixed_t value);
-	static void keyboardKeymapCb(void* data, struct wl_keyboard* keyboard,
-		uint32_t format, int fd, uint32_t size);
-	static void keyboardEnterCb(void* data, struct wl_keyboard* keyboard,
-		uint32_t serial, struct wl_surface* surface, struct wl_array* keys);
-	static void keyboardLeaveCb(void* data, struct wl_keyboard* keyboard,
-		uint32_t serial, struct wl_surface* surface);
-	static void keyboardKeyCb(void* data, struct wl_keyboard* keyboard,
-		uint32_t serial, uint32_t time, uint32_t key, uint32_t state);
-	void keyboardKey(struct wl_keyboard* keyboard,
-		uint32_t serial, uint32_t time, uint32_t key, uint32_t state);
-	static void keyboardModifiersCb(void* data, struct wl_keyboard* keyboard,
-		uint32_t serial, uint32_t mods_depressed, uint32_t mods_latched,
-		uint32_t mods_locked, uint32_t group);
+	static void registryGlobalCb(void *data, struct wl_registry *registry,
+			uint32_t name, const char *interface, uint32_t version);
+	void registryGlobal(struct wl_registry *registry, uint32_t name,
+			const char *interface, uint32_t version);
+	static void registryGlobalRemoveCb(void *data, struct wl_registry *registry,
+			uint32_t name);
+	static void seatCapabilitiesCb(void *data, wl_seat *seat, uint32_t caps);
+	void seatCapabilities(wl_seat *seat, uint32_t caps);
+	static void pointerEnterCb(void *data, struct wl_pointer *pointer,
+			uint32_t serial, struct wl_surface *surface, wl_fixed_t sx,
+			wl_fixed_t sy);
+	static void pointerLeaveCb(void *data, struct wl_pointer *pointer,
+			uint32_t serial, struct wl_surface *surface);
+	static void pointerMotionCb(void *data, struct wl_pointer *pointer,
+			uint32_t time, wl_fixed_t sx, wl_fixed_t sy);
+	void pointerMotion(struct wl_pointer *pointer,
+			uint32_t time, wl_fixed_t sx, wl_fixed_t sy);
+	static void pointerButtonCb(void *data, struct wl_pointer *wl_pointer,
+			uint32_t serial, uint32_t time, uint32_t button, uint32_t state);
+	void pointerButton(struct wl_pointer *wl_pointer,
+			uint32_t serial, uint32_t time, uint32_t button, uint32_t state);
+	static void pointerAxisCb(void *data, struct wl_pointer *wl_pointer,
+			uint32_t time, uint32_t axis, wl_fixed_t value);
+	void pointerAxis(struct wl_pointer *wl_pointer,
+			uint32_t time, uint32_t axis, wl_fixed_t value);
+	static void keyboardKeymapCb(void *data, struct wl_keyboard *keyboard,
+			uint32_t format, int fd, uint32_t size);
+	static void keyboardEnterCb(void *data, struct wl_keyboard *keyboard,
+			uint32_t serial, struct wl_surface *surface, struct wl_array *keys);
+	static void keyboardLeaveCb(void *data, struct wl_keyboard *keyboard,
+			uint32_t serial, struct wl_surface *surface);
+	static void keyboardKeyCb(void *data, struct wl_keyboard *keyboard,
+			uint32_t serial, uint32_t time, uint32_t key, uint32_t state);
+	void keyboardKey(struct wl_keyboard *keyboard,
+			uint32_t serial, uint32_t time, uint32_t key, uint32_t state);
+	static void keyboardModifiersCb(void *data, struct wl_keyboard *keyboard,
+			uint32_t serial, uint32_t mods_depressed, uint32_t mods_latched,
+			uint32_t mods_locked, uint32_t group);
 
 #elif defined(_DIRECT2DISPLAY)
-	//
+//
 #elif defined(VK_USE_PLATFORM_XCB_KHR)
 	xcb_window_t setupWindow();
 	void initxcbConnection();
-	void handleEvent(const xcb_generic_event_t* event);
+	void handleEvent(const xcb_generic_event_t *event);
 #else
 	void setupWindow();
 #endif
@@ -369,7 +370,7 @@ public:
 	/** @brief (Virtual) Called after a key was pressed, can be used to do custom key handling */
 	virtual void keyPressed(uint32_t);
 	/** @brief (Virtual) Called after the mouse cursor moved and before internal events (like camera rotation) is handled */
-	virtual void mouseMoved(double x, double y, bool& handled);
+	virtual void mouseMoved(double x, double y, bool &handled);
 	/** @brief (Virtual) Called when the window has been resized, can be used by the sample application to recreate resources */
 	virtual void windowResized();
 	/** @brief (Virtual) Called when resources have been recreated that require a rebuild of the command buffers (e.g. frame buffer), to be implemented by the sample application */
@@ -403,7 +404,7 @@ public:
 	virtual void renderFrame();
 
 	/** @brief (Virtual) Called when the UI overlay is updating, can be used to add custom elements to the overlay */
-	virtual void OnUpdateUIOverlay(vks::UIOverlay* overlay);
+	virtual void OnUpdateUIOverlay(vks::UIOverlay *overlay);
 };
 
 // OS specific macros for the example main entry points

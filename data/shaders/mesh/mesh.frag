@@ -1,5 +1,3 @@
-// Copyright 2020 Google LLC
-
 struct VSOutput
 {
     [[vk::location(0)]] float3 Normal : NORMAL0;

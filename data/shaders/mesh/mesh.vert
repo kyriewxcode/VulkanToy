@@ -1,5 +1,3 @@
-// Copyright 2020 Google LLC
-
 struct VSInput
 {
     [[vk::location(0)]] float4 Pos : POSITION0;
@@ -13,11 +11,10 @@ struct UBO
     float4x4 view;
     float4x4 model;
 };
-
 cbuffer ubo : register(b0)
 {
     UBO ubo;
-}
+};
 
 struct VSOutput
 {
